@@ -1,0 +1,73 @@
+{%extends 'shopstore/base.html'%}
+{%load static%}
+{%block link%}
+<link rel="stylesheet" type="text/css" href="{% static 'shopstore/css/index.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'shopstore/css/login.css'%}">
+<script type="text/javascript" src="{% static 'shopstore/js/login.js'%}"></script>
+{%endblock%}
+{%block body%}
+<body>
+	<header>
+		<nav class="navbar bg-primary">
+			<h3><span onclick="window.open('/','_self')">&#9729; Web Shop</span></h3>
+			<h4><img src="{%static 'shopstore/img/login.png'%}" class="icon-img"> Log In</h4>
+	</header>
+
+    <section id="login">
+    	<a>Already a member ?</a>
+        <br><img src="{%static 'shopstore/img/profile1.png'%}" class="medium-img"><br>
+    	<h5>Provide credential required.</h5>
+    	{%for error in loginerrors%}
+    		<li><i>{{error}}</i></li>
+    	{%endfor%}
+    	<form action="" method="post" id="loginform">{%csrf_token%}
+    		<input type="text" name="username" placeholder="Username" required="required">
+    		<input type="password" name="password" placeholder="Password" autocomplete="off" required="required">
+    		<br><br><button type="submit" name="login" value="login">Log In</button><br><br>
+    		<a href="">Forget password ?</a>
+    	</form>
+    </section>
+
+    <section id="register">
+    	<center>
+            <h5>Don't have an account ? <a>Create a new account.</a></h5>
+            <img src="{%static 'shopstore/img/add.png'%}" class="medium-img">
+        </center>
+        <div id="signdiv">
+        	<h5 class="navbar bg-info" id="signuphead">Sign Up for WebShop.</h5>
+        	<form action="" method="post" id="loginform" onsubmit="return Register();">{%csrf_token%}
+                {%for error in signuperrors%}
+                    <li>Opps!! {{error}}</li>
+                {%endfor%}
+        		<div>
+        		    <label>Username</label><br>
+        		    <input type="text" name="username" placeholder="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only" required="required" id="name">
+        		</div>
+        		<div>
+        		    <label>New password</label><br>
+        		    <input type="password" name="password" placeholder="Password length must be 8 or greater" autocomplete="off" required="required" autocomplete="off" id="np">
+        		</div>
+        		<div>
+        		    <label>Confirm password </label><br>
+        		    <input type="password" name="passwordtest" placeholder="Enter the same password as before, for verification." autocomplete="off" required="required" autocomplete="off" id="rp">
+        		</div>
+        		<p id="info">* All fields are mandatory.</p>
+        		<br><button type="submit" name="register" value="register">Register Account</button><br><br>
+        	</form>
+        </div>
+    </section>
+	<footer>
+		<ul>
+			<li>Terms of Use</li>
+			<li>Privacy Policy</li>
+			<li>Feedback</li>
+			<li>Report an Issue</li>
+			<li>FAQs</li>
+		</ul>
+		<center>
+			<br><img src="{%static 'shopstore/img/shopcart.png'%}" class="medium-img"><br>
+			Web Shopping &copy; 2019, All Rights Reserved.
+		</center>
+	</footer>
+</body>
+{%endblock%}tl

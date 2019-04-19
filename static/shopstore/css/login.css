@@ -1,0 +1,118 @@
+body{
+	background: #fff;
+}
+section#login{
+	text-align: center;
+}
+#login{
+	padding: 20px;
+}
+#login li{
+	list-style: none;
+	color: crimson;
+	font-family: georgia;
+}
+#login h5 a{
+	margin-left: 15px;
+	text-decoration: none;
+}
+#loginform{
+	padding: 20px;
+}
+#loginform input{
+	border: 1px solid grey;
+	border-radius: 4px 4px;
+	padding: 1px 10px;
+	padding: 4px 15px;
+}
+#loginform button[type="submit"]{
+	border: 1px solid lightgrey;
+	padding: 5px 20px;
+	background: #35891d;
+	color: #fff;
+	border-radius: 4px 4px;
+}
+#loginform button[type="submit"]:hover{
+	background: green;
+	border: 2px solid forestgreen;
+	cursor: pointer;
+}
+#register{
+	width: 90%;
+	margin: auto;
+	margin-bottom: 60px;
+}
+#register h5 a{
+	color: blue;
+}
+#register h5 a:hover{
+	color: #3542aa;
+	cursor: pointer;
+}
+#register li{
+	list-style: none;
+	color: crimson;
+	font-family: georgia;
+}
+#signdiv{
+	background: #f0f0f0;
+	background-size: cover;
+	border: 1px solid lightgrey;
+	min-height: 450px;
+}
+#register form{
+	margin-left: 20%;
+}
+#register form div{
+	display: block;
+	padding-right: 15px;
+}
+#register form label{
+}
+#register input{
+	width: 45%;
+	border: 1px solid grey;
+	border-radius: 4px 4px;
+	padding: 2px 15px;
+	background: #fff;
+	color: #444;
+}
+#register button[type="submit"]{
+	border: 1px solid white;
+	padding: 5px 20px;
+	background: salmon;
+	color: #fff;
+	border-radius: 4px 4px;
+}
+#register button[type="submit"]:hover{
+	background: coral;
+	border: 2px solid salmon;
+	cursor: pointer;
+}
+footer{
+	bottom: 0px;
+	width: 100%;
+}
+footer ul li{
+	display: inline-block;
+	padding: 10px;
+}
+@media(max-width: 768px){
+	#loginform input,button{
+		margin: 5px;
+	}	
+	#register input{
+	    width: 90%;
+	}
+	#register{
+	    width: 100%;
+	}
+	#register form{
+	    margin-left: 2%;
+    }
+}
+@media(max-width: 500px){	
+	#register input{
+	    width: 100%;
+	}
+}

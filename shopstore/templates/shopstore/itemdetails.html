@@ -1,0 +1,142 @@
+{%extends 'shopstore/base.html'%}
+{%load static%}
+{%block link%}
+<link rel="stylesheet" type="text/css" href="{% static 'shopstore/css/index.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'shopstore/css/itemdetails.css'%}">
+<script type="text/javascript" src="{% static 'shopstore/js/itemdetails.js'%}"></script>
+{%endblock%}
+{%block body%}
+<body>
+	<header>
+		<nav class="navbar bg-primary">
+			<h3><span onclick="window.open('/','_self')">&#9729; Web Shop</span></h3>
+			{%if request.user.is_authenticated%}
+			    <center>Welcome, {{request.user}}. Thanks! for logging in. </center>
+			{%endif%}
+			<ul>
+				{%if request.user.is_authenticated%}
+				<li onclick="window.open('/accounts/dashboard/','_self')">&equiv; Dashboard</li>
+				<li onclick="window.open('/accounts/logout/','_self')">
+					<img src="{% static 'shopstore/img/logout.png'%}" class="icon-img">
+					Log Out
+				</li>
+				{%else%}
+				<li onclick="window.open('/accounts/login/','_self')">Login</li>
+				<li onclick="window.open('/accounts/login/','_self')">Register</li>
+				{%endif%}
+			</ul>
+		</nav>
+		<form action="/search/" method="get" id="searchform">
+			<span>
+				<input type="text" name="q" placeholder="Search in WebShop">
+				<input type="submit" value="&#128270;">
+		    </span>
+		</form>
+	</header>
+
+	<section id="saledetails">
+		<h3 class="navbar bg-light">Item Details</h3>
+		<div id="iteminfo">
+		{%if item%}
+		    <img src="{{item.image.url}}" class="itemimagedetails" onclick="window.open('/item/details/{{item.id}}/','_self')"><br>
+		    <b><big>{{item.name}}</big></b><br>
+		{%else%}
+		    <center>
+		    	<h2> Opps ! </h2>
+		    	<label>Something went wrong. Refresh Page.</label>
+		    </center>
+		{%endif%}
+	    </div>
+	    <div id="des">
+	    	<h5>Descriptions : </h5>
+	    	{%if item%}
+			    <p>
+			    	{{item.describe}}
+				    <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				    cillum.
+				    <br>Excepteur sint occaecat cupidatat non
+				    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+				<br><br>
+
+				<form action="" method="post" onclick="return CheckUserAuth('{{userauth}}');">{%csrf_token%}
+				{%if not is_in_cart%}
+					{%if has_transac%}
+				        <p>&hearts; You have brought this item before.</p>
+				        <button type="button" class="btn btn-primary" name="buy" value="buy" onclick="BuyItem('{{userauth}}')">&check; Buy Again</button>
+				    {%else%}
+				        <p>&bullet; Click buy to make instant transaction or add to cart to make transaction later.</p>
+				        <button type="button" class="btn btn-primary" name="buy" value="buy" onclick="BuyItem('{{userauth}}')">&check; Buy Now</button>
+				    {%endif%}
+			        &emsp;
+			        <button class="btn btn-warning" name="cart" value="cart">&plus; Add to Cart</button><br><br>
+			    {%else%}
+			        <p>&bullet; Go to Your Dashboard to make transaction.</p>
+			        <button class="btn btn-primary">&check; Added to Cart</button>&emsp;
+			    {%endif%}
+			    </form>
+			    <b>Price: </b> $ {{item.price}}<br>
+			    <b>Date of Placement: </b>{{item.date}}
+			{%else%}
+			    <center>
+			    	<h2> Opps ! </h2>
+			    	<label>Something went wrong. Refresh Page.</label>
+			    </center>
+			{%endif%}
+	    </div>
+	</section>
+	<section id="purchase">
+		<div class="close"><span onclick="CloseBuy()">&times;</span></div>
+		<div id="transaction">
+			<h5 class="navbar navbar-dark bg-dark">Transaction Details</h5>
+			{%if item%}
+			<h6>Shopping Item</h6>
+			<center><p>
+			    <b>Price: </b> $ {{item.price}}<br>
+			    <b>Date of Placement: </b>{{item.date}}
+		    </p></center>
+			<div>
+			    <img src="{{item.image.url}}" class="imagecover" onclick="window.open('/item/details/{{item.id}}/','_self')"><br>
+			    <big>{{item.name}}</big><br>
+			</div>
+			<h6>Billing Informations</h6>
+			<form action="" method="post">{%csrf_token%}
+				<div>
+					<b>Payment Type: </b>
+				    <input list="cardtype" name="cardtype" placeholder="Visa">
+				    <datalist id="cardtype">
+					    <option>American Express</option>
+					    <option>Visa</option>
+					    <option>Master Card</option>
+				    </datalist>
+			    </div>
+			    <div>
+			    	<b>Card Number: </b>
+				    <input type="text" name="cardnum" placeholder="">
+				</div><br>
+				<div>
+					<b>Full Name: </b>
+					<input type="text" name="fn" placeholder="">
+				</div>
+
+				<div>
+					<b>Card Verification Code: </b>
+					<input type="text" name="code" placeholder="">
+				</div>
+				<br><br>
+				<button type="submit" name="bill" value="bill" class="btn btn-primary">Submit </button>
+			</form>
+			<br><br>
+			{%else%}
+			    <center>
+			    	<h2> Opps ! </h2>
+			    	<label>Something went wrong. Refresh Page.</label>
+			    </center>
+			{%endif%}
+		</div>
+	</section>
+</body>
+{%endblock%}tl

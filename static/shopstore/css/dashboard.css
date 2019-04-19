@@ -1,0 +1,103 @@
+body{
+
+}
+footer ul li{
+	display: inline-block;
+	padding: 0px 10px;
+}
+.closesession button{
+	border: none;
+	color: crimson;
+	font-family: georgia;
+	float: right;
+}
+.closesession button:hover{
+	color: red;
+	cursor: pointer;
+}
+#cartitems{
+	width: 90%;
+	margin: auto;
+	margin-top: 50px;
+}
+#cartitems table{
+	width: 100%;
+	margin: auto;
+	color: #35424a;
+}
+#transactions{
+	width: 90%;
+	margin: auto;
+	margin-top: 50px;
+}
+#transactions table{
+	width: 100%;
+	margin: auto;
+	color: #35424a;
+}
+#purchase{
+	position: absolute;
+	overflow: scroll;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.9;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0px;
+	z-index: 1000;
+	display: none;
+}
+#pbody{
+	margin-top: 50px;
+	background: #000;
+	opacity: 1.0;
+	color: #fff;
+}
+#pbody h5{
+	opacity: 1.0;
+	color: aqua;
+}
+#pbody table{
+	color: #fff;
+	width: 80%;
+	margin: auto;
+}
+#billingdiv{
+	color: #fff;
+	margin-left: 20px;
+}
+#billingdiv h5{
+	opacity: 1.0;
+	color: aqua;
+	padding-top: 5px;
+	border-top: 1px solid #fff;
+}
+#billingdiv form div{
+	display: inline-block;
+	padding: 6px 20px;
+}
+#billingdiv form button{
+	margin-left: 20px;
+	padding: 5px 20px;
+}
+.close{
+	color: #fff;
+	opacity: 1.0;
+	margin: 10px 20px;
+}
+@media(max-width: 768px){
+	#transactions{
+	    width: 100%;
+	}
+	#cartitems{
+	    width: 100%;
+	}
+	#cartitems table{
+		margin-left: 10px;
+	}
+	#transactions table{
+		margin-left: 10px;
+	}
+}

@@ -1,0 +1,55 @@
+{%extends 'shopstore/base.html'%}
+{%load static%}
+{%block link%}
+<link rel="stylesheet" type="text/css" href="{% static 'shopstore/css/index.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'shopstore/css/search.css'%}">
+<script type="text/javascript" src="{% static 'shopstore/js/search.js'%}"></script>
+{%endblock%}
+{%block body%}
+<body>
+	<header>
+		<nav class="navbar bg-primary">
+			<h3><span onclick="window.open('/','_self')">&#9729; Web Shop</span></h3>
+			<ul>
+				{%if request.user.is_authenticated%}
+				<li onclick="window.open('/accounts/dashboard/','_self')">&equiv; Dashboard</li>
+				<li onclick="window.open('/accounts/logout/','_self')">
+					<img src="{% static 'shopstore/img/logout.png'%}" class="icon-img">
+					Log Out
+				</li>
+				{%else%}
+				<li onclick="window.open('/accounts/login/','_self')">Login</li>
+				<li onclick="window.open('/accounts/login/','_self')">Register</li>
+				{%endif%}
+			</ul>
+		</nav>
+		<form action="/search/" method="get" id="searchform">
+			<span>
+				<input type="text" name="q" placeholder="Search in WebShop" value="{{query}}">
+				<input type="submit" value="&#128270;">
+		    </span>
+		</form>
+	</header>
+	<section id="sale">
+		<h3 class="navbar bg-light">Items On Sale</h3>
+		{%if items%}
+		<ul>
+			{%for item in items%}
+			<li>
+			    <img src="{{item.image.url}}" class="itemimage" onclick="window.open('/item/details/{{item.id}}/','_self')"><br>
+			    <b>{{item.name}}</b><br>
+			    <a href="/item/details/{{item.id}}/">Shop Now</a>
+			</li>
+			{%endfor%}
+		</ul>
+		{%else%}
+		    <center>
+		    	<h2> Opps ! </h2>
+		    	<label>No any items on store.</label><br>
+		    	<label>Searched for <code>{{query}}</code></label>
+		    </center>
+		{%endif%}
+	</section>
+
+</body>
+{%endblock%}tl

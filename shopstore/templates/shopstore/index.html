@@ -1,0 +1,86 @@
+{%extends 'shopstore/base.html'%}
+{%load static%}
+{%block link%}
+<link rel="stylesheet" type="text/css" href="{% static 'shopstore/css/index.css'%}">
+<script type="text/javascript" src="{% static 'shopstore/js/index.js'%}"></script>
+{%endblock%}
+{%block body%}
+<body>
+	<header>
+		<nav class="navbar bg-primary">
+			<h3><span>&#9729; Web Shop</span></h3>
+			{%if request.user.is_authenticated%}
+			    <center>Welcome, {{request.user}}. Thanks! for logging in. </center>
+			{%endif%}
+			<ul>
+				{%if request.user.is_authenticated%}
+				<li onclick="window.open('/accounts/dashboard/','_self')">&equiv; Dashboard</li>
+				<li onclick="window.open('/accounts/logout/','_self')">
+				    <img src="{% static 'shopstore/img/logout.png'%}" class="icon-img">
+				    Log Out
+				</li>
+				{%else%}
+				<li onclick="window.open('/accounts/login/','_self')">Login</li>
+				<li onclick="window.open('/accounts/login/','_self')">Register</li>
+				{%endif%}
+			</ul>
+		</nav>
+		<form action="/search/" method="get" id="searchform">
+			<span>
+				<input type="text" name="q" placeholder="Search in WebShop">
+				<input type="submit" value="&#128270;">
+		    </span>
+		</form>
+	</header>
+
+    <section id="webinfo">
+    	<div>
+    		<span>Do you love </span><br>
+    		<h3>Shopping Online ?</h3>
+    	</div>
+    </section>
+
+	<section id="sale">
+		<h3 class="navbar bg-light">Items On Sale</h3>
+		{%if items%}
+		<ul>
+			{%for item in items%}
+			<li>
+			    <img src="{{item.image.url}}" class="itemimage" onclick="window.open('/item/details/{{item.id}}/','_self')"><br>
+			    <b>{{item.name}}</b><br>
+			    <a href="/item/details/{{item.id}}/">Shop Now</a>
+			</li>
+			{%endfor%}
+		</ul>
+		{%else%}
+		    <center>
+		    	<h2> Opps ! </h2>
+		    	<label>No any items on store.</label>
+		    </center>
+		{%endif%}
+	</section>
+	<footer>
+		<ul>
+			<li>Terms of Use</li>
+			<li>Privacy Policy</li>
+			<li>Feedback</li>
+			<li>Report an Issue</li>
+			<li>FAQs</li>
+		</ul>
+		<ul>
+			<tl>Email Us</li>
+			<li>aneildhakal21@gmail.com</li>
+		</ul>
+		<ul id="social-media">
+			<h5>Follow Us</h5>
+			<li><img src="{% static 'shopstore/img/facebook.png'%}" width="30"><br>Facebook</li>
+			<li><img src="{% static 'shopstore/img/instagram.png'%}" width="30"><br>Instagram</li>
+			<li><img src="{% static 'shopstore/img/twitter.png'%}" width="30"><br>Twitter</li>
+		</ul>
+		<center>
+			<br><img src="{%static 'shopstore/img/shopcart.png'%}" class="medium-img"><br>
+			Web Shopping &copy; 2019, All Rights Reserved.
+		</center>
+	</footer>
+</body>
+{%endblock%}tl

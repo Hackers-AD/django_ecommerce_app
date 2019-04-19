@@ -1,0 +1,94 @@
+.itemimagedetails{
+	width: 80%;
+	cursor: pointer;
+}
+.imagecover{
+	width: 30%;
+	cursor: pointer;
+}
+#saledetails div{
+	width: 45%;
+	display: inline-block;
+	margin: 15px;
+}
+div#iteminfo{
+	padding-left: 20px;
+}
+div#des{
+	float: right;
+}
+div#des p{
+	padding-left: 20px;
+	color: #35424a;
+}
+#purchase{
+	position: absolute;
+	overflow: scroll;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background: #f0f0f0;
+	opacity: 0.96;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 30px;
+	z-index: 1000;
+	display: none;
+}
+#transaction{
+	width: 80%;
+	margin: auto;
+	color: #fff;
+	opacity: 1.0;
+	border: 1px solid grey;
+	border-top: none;
+	background: black;
+}
+#transaction div {
+	color: #fff;
+	opacity: 1.0;
+	text-align: center;
+}
+#transaction h5{
+	margin-top: 50px;
+}
+#transaction h6{
+	padding: 0px 20px;
+}
+#transaction p{
+	padding: 0px 20px;
+}
+#transaction form{
+	padding: 0px 20px;
+}
+#transaction form div{
+	display: inline-block;
+	padding: 10px;
+}
+#transaction form button{
+	margin-left: 25px;
+	padding: 5px 20px;
+}
+.close{
+	opacity: 1.0;
+	margin: 10px 20px;
+}
+@media(max-width: 768px){
+	body{
+
+	}
+	#saledetails div{
+	    width: 100%;
+	    display: block;
+	}
+	div#des{
+	    float: none;
+	    padding-left: 20px;
+	}
+	#transaction{
+	    width: 100%;
+	}
+	.imagecover{
+	    width: 60%;
+	}
+}

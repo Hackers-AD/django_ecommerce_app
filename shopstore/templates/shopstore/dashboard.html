@@ -1,0 +1,221 @@
+{%extends 'shopstore/base.html'%}
+{%load static%}
+{%block link%}
+<link rel="stylesheet" type="text/css" href="{% static 'shopstore/css/index.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'shopstore/css/dashboard.css'%}">
+<script type="text/javascript" src="{% static 'shopstore/js/dashboard.js'%}"></script>
+{%endblock%}
+{%block body%}
+<body onload="Amount()">
+	<header>
+		<nav class="navbar bg-primary">
+			<h3><span onclick="window.open('/','_self')">&#9729; Web Shop</span></h3>
+			{%if request.user.is_authenticated%}
+			    <center>{{request.user|upper}}'s Dashboard.</center>
+			{%endif%}
+			<ul>
+				{%if request.user.is_authenticated%}
+				<li onclick="window.open('/accounts/logout/','_self')">
+          <img src="{% static 'shopstore/img/logout.png'%}" class="icon-img">
+          Log Out
+        </li>
+				{%else%}
+				<li onclick="window.open('/accounts/login/','_self')">Login</li>
+				<li onclick="window.open('/accounts/login/','_self')">Register</li>
+				{%endif%}
+			</ul>
+		</nav>
+		<form action="/search/" method="get" id="searchform">
+			<span>
+				<input type="text" name="q" placeholder="Search in WebShop">
+				<input type="submit" value="&#128270;">
+		    </span>
+		</form>
+	</header>
+
+   <section id="cartitems">
+   	    <h4 class="navbar bg-info">Items added on Carts.</h4>
+   	    {%if cartitems%}
+   	    <div class="closesession">
+   	    	<form action="" method="post">{%csrf_token%}
+   	    		<button type="submit" name="clear_cart" value="true">
+   	    			<span><b><big>&times;</big></b> Clear Cart</span>
+   	    		</button>
+   	    	</form>
+   	    </div>
+   	    <table>
+   	    	<th>Item Name</th>
+   	    	<th>Price</th>
+   	    	<th>Check</th>
+   	        {%for item in cartitems%}
+   	            <tr id="{{item.id}}">
+   	            	<td>{{forloop.counter}}. {{item.item.name}}</td>
+   	            	<td>$ {{item.item.price}}</td>
+   	            	<td>
+   	            		<form>
+   	            			<input type="checkbox" name="confirm" checked="" onchange="Amount()">
+   	            		</form>
+   	            	</td>
+   	            </tr>
+   	        {%endfor%}
+   	        <tr>
+   	        	<td><b>Total Amount</b></td>
+   	        	<td><b id="amount"></b></td>
+   	        	<td></td>
+   	        </tr>
+   	    </table>
+   	    <br><br><br>
+   	    <center><button class="btn btn-success" onclick="PurchaseItem()">&check; Confirm Purchase</button></center>
+   	    {%else%}
+   	    <center>
+          <br><br><br>
+   	    	No any items in Cart.
+   	    	<br>
+   	    	<a href="/"><button class="btn btn-warning">Start Shopping</button></a>
+   	    </center>
+   	    When you'll select items for purchase, they will appears here.
+   	    {%endif%}
+   </section>
+   <section id="transactions">
+        <h4 class="navbar bg-info">Transactions</h4>
+        {%if transactions%}
+        <table>
+   	    	<th>Items Count</th>
+   	    	<th>Date</th>
+   	    	<th>Total Amount</th>
+   	        {%for transaction in transactions reversed%}
+   	            <tr>
+   	            	<td> {{transaction.item_id}}</td>
+   	            	<td> {{transaction.datetime}}</td>
+   	            	<td>$ {{transaction.total}}, <a href="">Details</a></td>
+   	            </tr>
+   	        {%endfor%}
+   	    </table>
+   	    {%else%}
+   	    <center>
+          <br><br><br>
+   	    	You haven't made any purchase.
+   	    	<br>
+   	    	<a href="/"><button class="btn btn-info">Shop Now</button></a>
+   	    </center>
+   	    <p>Transactions you made will appears here.</p>
+   	    {%endif%}
+   </section>
+   <br><br>
+
+	<footer>
+		<ul>
+			<li>Settings</li>
+			<li>Change Password</li>
+			<li>Feedback</li>
+			<li>Report an Issue</li>
+		</ul>
+		<center>
+			<br><img src="{%static 'shopstore/img/shopcart.png'%}" class="medium-img"><br>
+			Web Shopping &copy; 2019, All Rights Reserved.
+		</center>
+	</footer>
+
+   <section id="purchase">
+      <div class="close"><span onclick="ClosePurchase()">&times;</span></div>
+      <div id="pbody">
+         <h5 class="navbar">Transaction Details</h5>
+         {%if cartitems%}
+          <table>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Item Id</th>
+              {%for item in cartitems%}
+                  <tr id="{{item.item.id}}">
+                     <td>{{forloop.counter}}. {{item.item.name}}</td>
+                     <td>$ {{item.item.price}}</td>
+                     <td>{{item.item.id}}</td>
+                  </tr>
+              {%endfor%}
+              <tr>
+               <td><b>Total Amount</b></td>
+               <td><b id="grand"></b></td>
+               <td></td>
+              </tr>
+          </table>
+          {%endif%}
+      </div>
+      <br>
+      <div id="billingdiv">
+         <h5>Billing Informations</h5>
+         <form action="" method="post">{%csrf_token%}
+            <div>
+               <b>Card Type: </b>
+                <input list="cardtype" name="cardtype" placeholder="Visa" autocomplete="off">
+                <datalist id="cardtype">
+                   <option>American Express</option>
+                   <option>Visa</option>
+                   <option>Master Card</option>
+                </datalist>
+             </div>
+             <div>
+               <b>Card Number: </b>
+                <input type="text" name="cardnum" placeholder="">
+            </div><br>
+            <div>
+               <b>Full Name: </b>
+               <input type="text" name="fn" placeholder="">
+            </div>
+
+            <div>
+               <b>Card Verification Code: </b>
+               <input type="text" name="code" placeholder="" autocomplete="off">
+            </div>
+            <br><br>
+            <button type="submit" name="purchase" id="purc" class="btn btn-warning">Submit</button>
+         </form>
+      </div><br><br>
+   </section>
+   <script type="text/javascript">
+      function Amount() {
+         var amount=document.getElementById('amount');
+         var grand=document.getElementById('grand');
+
+         var total=0;
+         var grandtotal=0;
+         var counter=0;
+         var falsecounter=0;
+
+            {%for x in cartitems%}
+               total=total+parseFloat("{{x.item.price}}");
+               irow=document.getElementById('{{x.id}}');
+               input=irow.getElementsByTagName('input');
+               var purchase=document.getElementById('purc');
+               console.log(input[0].checked);
+               crow=document.getElementById("{{x.item.id}}");
+               console.log(crow);
+
+               if (input[0].checked==true) {
+                  crow.style.display="table-row";
+                  grandtotal=grandtotal+parseFloat("{{x.item.price}}");
+                  console.log(grandtotal);
+                  if (counter==0) {
+                     purchase.value="{{x.item.id}}";
+                     counter=1;
+                  }
+                  else{
+                     purchase.value=purchase.value+","+"{{x.item.id}}";
+                  }
+               }
+               else {
+                  falsecounter=falsecounter+1;
+                  crow.style.display="none";
+                  console.log(grandtotal);
+                  if(falsecounter== parseInt("{{cartitems|length}}")){
+                     purchase.value="";
+                  };
+               }
+               console.log(purchase.value);
+            {%endfor%}
+
+         amount.innerHTML="$ "+total;
+         grand.innerHTML="$ "+grandtotal;
+      }
+   </script>
+</body>
+{%endblock%}tl
